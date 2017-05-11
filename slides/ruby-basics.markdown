@@ -12,67 +12,11 @@ title:  Ruby basics
 
 ---
 
-# RVM
-
---
-
-## RVM first
-
-![](/rubygarage/assets/images/rvm.png)
-
-Visit https://rvm.io for more details.
-
-```sh
-$ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-$ \curl -sSL https://get.rvm.io | bash -s stable
-$ rvm install 2.3.0
-$ rvm use 2.3.0
-$ rvm gemset create project_name
-$ rvm gemset use project_name
-```
-
---
-
-## Supported files
-
-- `.rvmrc` - shell script allowing full customization of the environment
-- `.versions.conf` - key=value configuration file
-- `.ruby-version` - single line ruby-version only
-- `.ruby-gemset` - single line ruby-gemset only
-- `Gemfile` - comment: #ruby=2.3.0 and directive: ruby '2.3.0'
-
---
-
-.rvmrc <!-- .element: class="filename" -->
-```sh
-rvm use 2.0.0@project_name --create
-```
-
-.ruby-version <!-- .element: class="filename" -->
-```sh
-2.0.0-p247
-```
-
-.ruby-gemset <!-- .element: class="filename" -->
-```sh
-project_name
-```
-
---
-
-## RVM Best Practices
-- Use `.ruby-version` and `.ruby-gemset` files for each of your individual projects
-- Check your `.ruby-version` file into source control
-- Use per-project gemsets
-- Deploy with rvm when possible
-
----
-
 # Run Ruby
 
 --
 
-## Run Ruby files
+## Run Ruby source files
 
 hello_world.rb <!-- .element: class="filename" -->
 
@@ -99,7 +43,7 @@ Hello Ruby world!
 
 --
 
-## Interactive Ruby
+## Run in REPL
 
 ```ruby
 $ irb
@@ -110,27 +54,55 @@ puts 'Hello Ruby world!'
 
 ---
 
-# Everything is an object
+# Objects
 
 --
 
 ## In Ruby, everything is an object.
+(and has methods that you can call)
 
 ```ruby
+1.class # you can call methods without ()
+# => Fixnum
+
+false.class
+# => FalseClass
+
 'alice'.capitalize
 # => "Alice"
 
 5.next
 # => 6
 
-false.class
-# => FalseClass
-
 [5, 12, 4].sort
 # => [4, 5, 12]
 
-Object.methods
-# => [:new, :allocate, :superclass, :<=>, :module_exec, :class_exec, :<=, :>=, :==, :===, :include?, ... ]
+```
+
+--
+
+## Even classes are objects
+
+```ruby
+Fixnum.class
+# => Class
+# 1.class.class ??
+
+1.instance_of?(Fixnum)
+# => true
+
+Fixnum.methods
+# => [:class, :to_s, :superclass, :name, :is_a? ...
+
+1.methods
+# => [:to_s, :+, :-, :*, :abs, :zero?, :next ...
+
+1.next
+# => 2
+
+1.methods.include?(:methods)
+# => true
+
 ```
 
 ---
@@ -157,23 +129,20 @@ Object.methods
 ## Numbers conversion
 
 ```ruby
-1 + 2
-# => 3
+1 + 2 # => 3
 
-1 + 2.0
-# => 3.0
+1 + 2.0 # => 3.0
 
-1.0 + 2
-# => 3.0
+1.0 + 2 # => 3.0
 
-1 / 2
-# => 0
+1 / 2 # => 0
 
-1.0 / 2
-# => 0.5
+1.0 / 2 # => 0.5
 
-1 / 2.0
-# => 0.5
+1 / 2.0 # => 0.5
+
+# Also
+1.+(1) # => 2
 ```
 
 --
@@ -207,12 +176,6 @@ Assume variable `a` holds `10` and variable `b` holds `20` then:
 | %=       | Modulus AND assignment operator, It takes modulus using two operands and assign the result to left operand                   | c %= a is equivalent to c = c % a            |
 | \*\*=    | Exponent AND assignment operator, Performs exponential (power) calculation on operators and assign value to the left operand | c \*\*= a is equivalent to c = c \*\* a      |
 
-### Safe navigation Operator (only 2.3.0)
-
-| Operator | Description                                                                                                | Example |
-|----------|------------------------------------------------------------------------------------------------------------|---------|
-| &.       | Makes it safer to chain multiple methods together. Execution stopes if method doesn’t exist or returns nil | a&.b&.c |
-
 ---
 
 # Strings
@@ -243,16 +206,10 @@ String.new
 'Seconds/day: #{24 * 60 * 60}'
 # => Seconds/day: #{24 * 60 * 60}
 
-"Tro #{'Lo ' * 3}!!!1"
-# => Tro Lo Lo Lo !!!1
+#      ↓ any code can go here
+"Trol#{'Lo' * 3} !!!1"
+# => TroLoLoLo !!!1
 
-"Now is #{
-          def the(a)
-            'the ' + a
-          end
-          the('time')
-        } for all good coders ..."
-# => Now is the time for all good coders ...
 ```
 
 --
@@ -299,18 +256,14 @@ str.slice(13, 12)
 str[13..-17]
 # => "I love it!"
 
-str['I love it!']
-# => "I love it!"
-
-str[/[abc](.)\1/]
-# => "amm"
 ```
 
 --
 
 ## Useful methods
 
-Follow by http://ruby-doc.org/core-2.3.0/String.html for more information
+Look in [the docs](http://ruby-doc.org/core-2.3.0/String.html) for more
+information
 
 ```ruby
 'pROgraMMing'.capitalize
@@ -331,9 +284,7 @@ Follow by http://ruby-doc.org/core-2.3.0/String.html for more information
 
 --
 
-## Useful methods
-
-Follow by http://ruby-doc.org/core-2.3.0/String.html for more information
+## More methods
 
 ```ruby
 'Programming'.match(/(.)\1/)
@@ -360,20 +311,23 @@ Follow by http://ruby-doc.org/core-2.3.0/String.html for more information
 
 ## Array
 
-> Arrays are ordered, integer-indexed collections of any object.
+> Arrays are ordered, integer-indexed collections
 
-> Array indexing starts at 0, as in C or Java.
-> A negative index is assumed to be relative to the end of the array — that is, an index of -1 indicates the last element of the array
+- They can hold any object
 
-Follow by http://ruby-doc.org/core-2.3.0/Array.html for more information
+- Array indexing starts at 0, as in C or Java.
+- A negative index is assumed to be relative to the end of the array
+ - an index of -1 indicates the last element
+
+More [in the docs](http://ruby-doc.org/core-2.3.0/Array.html)...
 
 --
 
 ## Creating
 
 ```ruby
-[[1, 2, 3], 10, 3.14, 'This is a string', barnet('pebbles')]
-# => [[1, 2, 3], 10, 3.14, "This is a string", "pebbles results"]
+[[1, 2, 3], 10, 3.14, 'This is a string', 'pebbles']
+# => [[1, 2, 3], 10, 3.14, "This is a string", "pebbles"]
 
 Array.new
 # => []
@@ -384,16 +338,10 @@ Array.new(3)
 Array.new(3, true)
 # => [true, true, true]
 
-Array.new(4) { Hash.new }
-# => [{}, {}, {}, {}]
-
-Array({ a: 'a', b: 'b' })
-# => [[:a, "a"], [:b, "b"]]
-
-%w(monkey fish lion dog cat #{Time.now})
+%w(monkey fish lion cat #{Time.now}) # equivalent to ['monkey', 'fish'...
 # => ["monkey", "fish", "lion", "dog", "cat", "\#{Time.now}"]
 
-%W(monkey fish lion dog cat #{Time.now})
+%W(monkey fish lion cat #{Time.now}) # equivalent to ["monkey", "fish" ...
 # => ["monkey", "fish", "lion", "dog", "cat", "2013-05-03 12:24:42 +0300"]
 ```
 
@@ -405,17 +353,13 @@ Array({ a: 'a', b: 'b' })
 languages = 'Ruby', 'JavaScript', 'Python', 'PHP'
 # => ["Ruby", "JavaScript", "Python", "PHP"]
 
-languages.at(0)
-# => "Ruby"
+languages.at(0) # => "Ruby"
 
-languages[0]
-# => "Ruby"
+languages[0] # => "Ruby"
 
-languages[4]
-# => nil
+languages[4] # => nil
 
-languages[2..3]
-# => ["Python", "PHP"]
+languages[2..3] # => ["Python", "PHP"]
 
 languages.take(3)
 # => ["Ruby", "JavaScript", "Python"]
@@ -429,22 +373,16 @@ languages
 
 --
 
-## Extracts the nested value (only from 2.3.0)
+## Bonus: `dig`  Extracts nested values
+<div style="text-align: right; margin-right:15%">
+(only from 2.3.0)
+</div>
 
 ```ruby
-a = [[1, [2, 3]]]
+a = [[1, [2, 3] ]]
 
 a.dig(0, 1, 1)
 # => 3
-
-a.dig(1, 2, 3)
-# => nil
-
-a.dig(0, 0, 0)
-# => NoMethodError, undefined method 'dig' for 1:Fixnum
-
-[42, {foo: :bar}].dig(1, :foo)
-# => :bar
 ```
 
 --
@@ -465,45 +403,45 @@ languages.unshift('C++')
 # => ["C++", "Ruby", "JavaScript", "Python", "PHP", "Closure", "Haskell"]
 
 languages.insert(3, 'CoffeeScript')
-# => ["C++", "Ruby", "JavaScript", "CoffeeScript", "Python", "PHP", "Closure", "Haskell"]
+# => ["C++", "Ruby", "JavaScript", "CoffeeScript", "Python", "PHP", "Closure",...
 
 languages.insert(4, 'Haml', 'Sass')
-# => ["C++", "Ruby", "JavaScript", "CoffeeScript", "Haml", "Sass", "Python", "PHP", "Closure", "Haskell"]
+# => ["C++", "Ruby", "JavaScript", "CoffeeScript", "Haml", "Sass", "Python",...
 ```
 
 --
 
-## Removing items
+## Removing items (1)
 
 ```ruby
-languages = ['C++', 'Ruby', 'JavaScript', 'CoffeeScript', 'Haml', 'Sass', 'Python', 'PHP', 'Closure', 'Haskell']
-# => ["C++", "Ruby", "JavaScript", "CoffeeScript", "Haml", "Sass", "Python", "PHP", "Closure", "Haskell"]
+languages = ['C++', 'Ruby', 'JavaScript', 'CoffeeScript', 'Haml']
+# => ["C++", "Ruby", "JavaScript", "CoffeeScript", "Haml"]
 
 languages.pop
-# => "Haskell"
+# => "Haml"
 
 languages
-# => ["C++", "Ruby", "JavaScript", "CoffeeScript", "Haml", "Sass", "Python", "PHP", "Closure"]
+# => ["C++", "Ruby", "JavaScript", "CoffeeScript"]
 
 languages.shift
 # => "C++"
 
 languages
-# => ["Ruby", "JavaScript", "CoffeeScript", "Haml", "Sass", "Python", "PHP", "Closure"]
+# => ["Ruby", "JavaScript", "CoffeeScript"]
 
 languages.delete_at(2)
 # => "CoffeeScript"
 
 languages
-# => ["Ruby", "JavaScript", "Haml", "Sass", "Python", "PHP", "Closure"]
+# => ["Ruby", "JavaScript"]
 
-languages.delete('PHP')
-# => "PHP"
+languages.delete('JavaScrip')
+# => "JavaScrip"
 ```
 
 --
 
-## Removing items
+## Removing items (2)
 
 ```ruby
 languages
@@ -568,7 +506,7 @@ days1 << 'Thu' << 'Fri' << 'Sat' << 'Sun'
 
 --
 
-## Operations
+## Operations (1)
 
 ```ruby
 os = ['Fedora', 'SUSE', 'Red Hat', 'MacOS', 'Windows']
@@ -601,7 +539,7 @@ linux_os - os
 
 --
 
-## Operations
+## Operations (2)
 
 ```ruby
 os = ['Fedora', 'SUSE', 'Red Hat', 'MacOS', 'Windows']
@@ -627,7 +565,7 @@ linux_os * ', '
 
 --
 
-## Iterators
+## Iteration
 
 each
 
@@ -635,14 +573,6 @@ each
 a = ['a', 'b', 'c']
 a.each { |x| print x, ' -- ' }
 # a -- b -- c --
-```
-
-each_index
-
-```ruby
-a = ['a', 'b', 'c']
-a.each_index { |x| print x, ' -- ' }
-# 0 -- 1 -- 2 --
 ```
 
 each_with_index
@@ -654,6 +584,32 @@ a.each_with_index { |item, index| puts "[#{index}] => #{item}" }
 # [1] => b
 # [2] => c
 ```
+> `each` is actually a VIP method with regards to enumeration.
+
+> There is a `for` construct it's not idiomatic.
+
+--
+
+## Long live `each` method !
+
+```ruby
+nums = [1,2,3,4]
+
+nums.each { |n|  print n  }
+#         ↑that's a block ↑
+
+nums.each do |n| # ← that's
+  print n        # ← also a
+end              # ← block!
+```
+
+
+### Under the hood:
+`each`
+<span style="color:red">yields</span>
+ n to the given
+<span style="color:blue">block</span>.
+
 
 ---
 
