@@ -12,11 +12,11 @@ title:  Ruby basics
 
 ---
 
-# Run Ruby
+# You can run Ruby...
 
 --
 
-## Run Ruby source files
+## ...from source files
 
 hello_world.rb <!-- .element: class="filename" -->
 
@@ -43,7 +43,11 @@ Hello Ruby world!
 
 --
 
-## Run in REPL
+## ...inside a REPL
+<div style="text-align: right; margin-right:15%">
+(a.k.a Read-Eval-Print-Loop)
+</div>
+
 
 ```ruby
 $ irb
@@ -86,9 +90,11 @@ false.class
 ```ruby
 Fixnum.class
 # => Class
-# 1.class.class ??
 
 1.instance_of?(Fixnum)
+# => true
+
+>> Fixnum.is_a?(Object)
 # => true
 
 Fixnum.methods
@@ -141,7 +147,7 @@ Fixnum.methods
 
 1 / 2.0 # => 0.5
 
-# Also
+# You can use operators nas methods *
 1.+(1) # => 2
 ```
 
@@ -287,9 +293,6 @@ information
 ## More methods
 
 ```ruby
-'Programming'.match(/(.)\1/)
-# => #<MatchData "mm" 1:"m">
-
 'Programming'.partition('gra')
 # => ["Pro", "gra", "mming"]
 
@@ -326,8 +329,8 @@ More [in the docs](http://ruby-doc.org/core-2.3.0/Array.html)...
 ## Creating
 
 ```ruby
-[[1, 2, 3], 10, 3.14, 'This is a string', 'pebbles']
-# => [[1, 2, 3], 10, 3.14, "This is a string", "pebbles"]
+[[1, 2, 3], 10, 3.14, 'This is a string']
+# => [[1, 2, 3], 10, 3.14, "This is a string"]
 
 Array.new
 # => []
@@ -361,14 +364,13 @@ languages[4] # => nil
 
 languages[2..3] # => ["Python", "PHP"]
 
-languages.take(3)
+languages.take(3) 
 # => ["Ruby", "JavaScript", "Python"]
 
-languages[1] = 'CoffeeScript'
+languages[1] = 'CoffeeScript' 
 # => "CoffeeScript"
 
-languages
-# => ["Ruby", "CoffeeScript", "Python", "PHP"]
+languages # => ["Ruby", "CoffeeScript", "Python", "PHP"]
 ```
 
 --
@@ -615,74 +617,109 @@ end              # ← block!
 
 # Symbols
 
-> Ruby uses symbols, and maintains a Symbol Table to hold them. Symbols are names — names of instance variables, names of
-methods, names of classes. A Symbol object is created by prefixing an operator, string, variable, constant, method,
-class, module name with a colon. Symbols are immutable. The symbol object will be unique for each different name but
-does not refer to a particular instance of the name, for the duration of a program's execution.
+> Symbols as a type are much like a compiler/interpeter's symbols.
 
-Follow by http://www.ruby-doc.org/core-2.3.0/Symbol.html for more information.
+> Ruby too uses a Symbol Table to hold them.
+
+more info [in the docs](http://www.ruby-doc.org/core-2.3.0/Symbol.html)
 
 --
 
-## Symbol
+## :symbols are nice, they...
+- start with a colon
+- are immutable
+- usually represent names of things.
+ - e.g method names
 
 ```ruby
-:ruby_rules
-# => :ruby_rules
+Fixnum.methods
+# => [:class, :to_s, :superclass, :name, :is_a? ...
 
-:"Ruby rules"
-# => :"Ruby rules"
+1.methods
+# => [:to_s, :+, :-, :*, :abs, :zero?, :next ...
 
-language = 'Ruby'
-:"#{language} rules"
-# => :"Ruby rules"
-
-:ruby.object_id
-# => 319048
-
-:ruby.object_id
-# => 319048
-
-'ruby'.object_id
-# => 70200985531220
-
-'ruby'.object_id
-# => 70200985514360
 ```
+
+> The symbol object will be unique for each different name,
+>  but does not refer to a particular "instance" of the name.
+
+--
+
+## Symbol examples
+
+```ruby
+:ruby_rules      # => :ruby_rules
+
+:"Ruby rules"    # => :"Ruby rules"
+
+:ruby.object_id  # => 319048
+
+:ruby.object_id  # => 319048
+
+'ruby'.object_id # => 70200985531220
+
+'ruby'.object_id # => 70200985514360
+```
+
+--
+
+## Symbols' usage
+
+99/100 times Symbols are used as one of 2 things :
+- keys in Hashes (see next slide)
+- names of methods / attributes of objects
 
 ---
 
 # Hashes
+<div style="text-align: right; margin-right:15%">
+(you can guess the data structure...)
+</div>
 
-> A Hash is a collection of key-value pairs. It is similar to an Array (sometimes it is called an associative array),
+--
+
+## What's a Hash ?
+
+> A Hash is a collection of key-value pairs. It is/looks similar to an Array (sometimes it is called an associative array),
 except that indexing is done via arbitrary keys of any object type, not an integer index.
 
-Follow by http://www.ruby-doc.org/core-2.3.0/Hash.html for more information.
+More [in the docs](http://www.ruby-doc.org/core-2.3.0/Hash.html)
 
 --
 
 ## Creating
+Hash literals are created with hash rockets `=>`
 
 ```ruby
 { 'font_size' => 10, 'font_family' => 'Arial' }
 # => {"font_size"=>10, "font_family"=>"Arial"}
 
-{ :font_size => 10, :font_family => 'Arial' } # Old hash-rocket style
-# => {:font_size=>10, :font_family=>'Arial'}
+a = 'ruby'
+b = 'clojure'
 
-{ font_size: 10, font_family: 'Arial' } # New hash-colon style
-# => {:font_size=>10, :font_family=>"Arial"}
+h = { a => 'awesome', b => 'functional' }
+
+{ :font_size => 10, :font_family => 'Arial' } # "old" hash-rocket style
+# => {:font_size=>10, :font_family=>'Arial'}
 
 Hash.new
 # => {}
 
-Hash['a' => 100, 'b' => 200]
-# => {"a"=>100, "b"=>200}
 ```
 
 --
 
-## Default value
+## Symbols + Hashes = ❤
+
+```ruby
+{ font_size: 10, font_family: 'Arial' } # New hash-colon style
+# => {:font_size=>10, :font_family=>"Arial"}
+
+```
+
+--
+
+## Default values
 
 ```ruby
 h = Hash.new('Default value')
@@ -712,47 +749,27 @@ delete
 
 ```ruby
 h = { a: 100, b: 200 }
-h.delete(:a)
-# => 100
-
-h.delete(:z)
-# => nil
+h.delete(:a) # => 100
+h.delete(:z) # => nil
 ```
 
 delete_if
 
 ```ruby
 h = { a: 100, b: 200, c: 300 }
-h.delete_if { |key, value| value > 100 }
-# => {"a"=>100}
+h.delete_if { |key, value| value > 100 } # => {"a"=>100}
 ```
-
---
-
-## Removing items
 
 keep_if
 
 ```ruby
 h = { a: 100, b: 200, c: 300 }
-h.keep_if { |key, value| value > 100 }
-# => {"b"=>200, "c"=>300}
-```
-
-shift
-
-```ruby
-h = { 1 => 'a', 2 => 'b', 3 => 'c' }
-h.shift
-# => [1, "a"]
-
-h
-# => {2=>"b", 3=>"c"}
+h.keep_if { |key, value| value > 100 } # => {"b"=>200, "c"=>300}
 ```
 
 --
 
-## Useful methods
+## Iteration
 
 each
 
@@ -786,18 +803,17 @@ h.each_value { |value| puts value }
 
 --
 
-## Useful methods
+## Useful methods (1)
 
-key?
+key? / include?
 
 ```ruby
 h = { a: 100, b: 200 }
 
-h.key?('a')
-# => true
+h.key?(:a) # => true
+h.key?(:z) # => false
+h.include?(:a) # => true
 
-h.key?('z')
-# => false
 ```
 
 value?
@@ -805,24 +821,21 @@ value?
 ```ruby
 h = { a: 100, b: 200 }
 
-h.value?(100)
-# => true
+h.value?(100) # => true
 
-h.value?(999)
-# => false
+h.value?(999) # => false
 ```
 
 --
 
-## Useful methods
+## Useful methods (2)
 
 keys
 
 ```ruby
 h = { a: 100, b: 200 }
 
-h.keys
-# => ["a", "b"]
+h.keys # => ["a", "b"]
 ```
 
 values
@@ -830,8 +843,7 @@ values
 ```ruby
 h = { a: 100, b: 200, c: 300 }
 
-h.values
-# => [100, 200, 300
+h.values # => [100, 200, 300]
 ```
 
 values_at
@@ -839,27 +851,24 @@ values_at
 ```ruby
 h = { a: 100, b: 200, c: 300 }
 
-h.values_at('a', 'c')
-# => [100, 300]
+h.values_at('a', 'c') # => [100, 300]
 ```
 
 --
 
-## Useful methods
+## Useful methods (3)
 
-length
+length / size
 
 ```ruby
 h = { d: 100, a: 200, v: 300, e: 400 }
 
-h.length
-# => 4
+h.length # => 4
+h.size # => 4
 
-h.delete('a')
-# => 200
+h.delete('a') # => 200
 
-h.length
-# => 3
+h.length # => 3
 ```
 
 merge
@@ -874,7 +883,7 @@ h1.merge(h2)
 
 --
 
-## Useful methods
+## Useful methods (4)
 
 select
 
@@ -890,11 +899,9 @@ dig (2.3.0 only)
 ```ruby
 h = { a: { b: { c: 1 } } }
 
-h.dig(:a, :b, :c)
-# => 1
+h.dig(:a, :b, :c)    # => 1
 
-h.dig(:a, :some, :c)
-# => nil
+h.dig(:a, :some, :c) # => nil
 
 h[:a][:some][:c]
 # => NoMethodError: undefined method '[]' for nil:NilClass
@@ -1517,21 +1524,9 @@ while i < 11
 end
 # => 1 2 3 4 6 7 8 9 10
 ```
+> There is is a lso a construct similar to `do` stuff `while` condition
 
---
-
-## Like do...while
-
-```ruby
-i = 11
-
-begin
-  print "#{i} "
-
-  i += 1
-end while i < 10
-# => 11
-```
+> but `loop is prefered for these cases
 
 --
 
@@ -1550,23 +1545,18 @@ end
 
 --
 
-## For
-
-```ruby
-for i in 1..10
-  print "#{i} "
-end
-# => 1 2 3 4 6 7 8 9 10
-```
-
---
-
 ## Each
 
 ```ruby
 [1,2,3,4,5,6,7,8,9,10].each { |value| print "#{value} " }
 # => 1 2 3 4 6 7 8 9 10
 ```
+
+--
+
+## For
+~~content deleted~~
+###use `each`
 
 --
 
