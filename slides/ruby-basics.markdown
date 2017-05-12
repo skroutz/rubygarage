@@ -268,7 +268,7 @@ str[13..-17]
 
 ## Useful methods
 
-Look in [the docs](http://ruby-doc.org/core-2.3.0/String.html) for more
+Look in [the docs](http://ruby-doc.org/core-2.4.1/String.html) for more
 information
 
 ```ruby
@@ -322,7 +322,7 @@ information
 - A negative index is assumed to be relative to the end of the array
  - an index of -1 indicates the last element
 
-More [in the docs](http://ruby-doc.org/core-2.3.0/Array.html)...
+More [in the docs](http://ruby-doc.org/core-2.4.1/Array.html)...
 
 --
 
@@ -621,7 +621,7 @@ end              # ← block!
 
 > Ruby too uses a Symbol Table to hold them.
 
-more info [in the docs](http://www.ruby-doc.org/core-2.3.0/Symbol.html)
+more info [in the docs](http://www.ruby-doc.org/core-2.4.1/Symbol.html)
 
 --
 
@@ -683,7 +683,7 @@ Fixnum.methods
 > A Hash is a collection of key-value pairs. It is/looks similar to an Array (sometimes it is called an associative array),
 except that indexing is done via arbitrary keys of any object type, not an integer index.
 
-More [in the docs](http://www.ruby-doc.org/core-2.3.0/Hash.html)
+More [in the docs](http://www.ruby-doc.org/core-2.4.1/Hash.html)
 
 --
 
@@ -918,7 +918,7 @@ h.dig(:a, 1)
 
 > A Range represents an interval — a set of values with a beginning and an end.
 
-Follow by http://www.ruby-doc.org/core-2.3.0/Range.html for more information.
+Follow by http://www.ruby-doc.org/core-2.4.1/Range.html for more information.
 
 --
 
@@ -951,7 +951,7 @@ Creates a range from `a` to `e`
 
 > Time is an abstraction of dates and times.
 
-Follow by http://www.ruby-doc.org/core-2.3.0/Time.html for more information.
+Follow by http://www.ruby-doc.org/core-2.4.1/Time.html for more information.
 
 --
 
@@ -1025,7 +1025,7 @@ t.strftime('%Y-%m-%d %H:%M:%S')
 
 > A `File` is an abstraction of any file object accessible by the program and is closely associated with class `IO`.
 
-Follow by http://www.ruby-doc.org/core-2.3.0/File.html for more information.
+Follow by http://www.ruby-doc.org/core-2.4.1/File.html for more information.
 
 --
 
@@ -1164,7 +1164,7 @@ File.expand_path(__FILE__)
 > Objects of class Dir are directory streams representing directories in the underlying file system.
 They provide a variety of ways to list directories and their contents.
 
-Follow by http://ruby-doc.org/core-2.3.0/Dir.html for more information.
+Follow by http://ruby-doc.org/core-2.4.1/Dir.html for more information.
 
 --
 
