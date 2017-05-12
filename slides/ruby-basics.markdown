@@ -918,7 +918,7 @@ h.dig(:a, 1)
 
 > A Range represents an interval — a set of values with a beginning and an end.
 
-Follow by http://www.ruby-doc.org/core-2.4.1/Range.html for more information.
+More info [in the docs](http://www.ruby-doc.org/core-2.4.1/Range.html)
 
 --
 
@@ -930,7 +930,7 @@ Creates a range from `1` to `10` inclusive
 # => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 ```
 
-Creates a range from `1` to `10`
+Creates a range from `1` to `10` exclusive
 
 ```ruby
 1...10
@@ -945,19 +945,23 @@ Creates a range from `a` to `e`
 # => ["a", "b", "c", "d", "e"]
 ```
 
+
 ---
 
 # Time
 
 > Time is an abstraction of dates and times.
 
-Follow by http://www.ruby-doc.org/core-2.4.1/Time.html for more information.
+More info [in the docs](http://www.ruby-doc.org/core-2.4.1/Time.html)
 
 --
 
 ## Time
 
 ```ruby
+Time.now
+# 2017-05-12 14:14:37 +0300
+
 Time.new(2016)
 # => 2016-01-01 00:00:00 +0200
 
@@ -967,7 +971,7 @@ Time.new(2016, 10)
 Time.new(2016, 10, 30, 2, 2, 2, '+03:00')
 # => 2016-10-30 02:02:02 +0300
 
-Time.at(628232400)
+Time.at(628232400) # Create with UNIX timestamp
 # => 1989-11-28 08:00:00 +0300
 ```
 
@@ -976,44 +980,16 @@ Time.at(628232400)
 ## Time
 
 ```ruby
-t = Time.new
+t = Time.new("2013-05-09 18:50:25")
 # => 2013-05-09 18:50:25 +0300
 
-t.year
-# => 2013
-
-t.month
-# => 5
-
-t.day
-# => 9
-
-t.wday
-# => 4
-
-t.yday
-# => 129
-```
-
---
-
-## Time
-
-```ruby
-t = Time.new
-# => 2013-05-09 18:50:25 +0300
-
-t.hour
-# => 18
-
-t.min
-# => 50
-
-t.sec
-# => 25
-
-t.zone
-# => "EEST"
+t.year  # => 2013
+t.month # => 5
+t.day   # => 9
+t.hour  # => 18
+t.min   # => 50
+t.sec   # => 25
+t.zone  # => "EEST"
 
 t.strftime('%Y-%m-%d %H:%M:%S')
 # => "2013-05-09 18:50:25"
@@ -1023,9 +999,9 @@ t.strftime('%Y-%m-%d %H:%M:%S')
 
 # File
 
-> A `File` is an abstraction of any file object accessible by the program and is closely associated with class `IO`.
+> The `File` abstraction is closely associated with class `IO`.
 
-Follow by http://www.ruby-doc.org/core-2.4.1/File.html for more information.
+More info [in the docs](http://www.ruby-doc.org/core-2.4.1/File.html)
 
 --
 
@@ -1044,13 +1020,11 @@ open, close
 f = File.open('tmp.txt', 'r')
 # => #<File:tmp.txt>
 
-f.closed?
-# => false
+f.closed? # => false
 
 f.close
 
-f.closed?
-# => true
+f.closed? # => true
 ```
 
 --
@@ -1068,16 +1042,6 @@ File.read('tmp.txt', 20)
 
 File.read('tmp.txt', 20, 10)
 # => "ne one\nThis is line "
-```
-
-gets
-
-```ruby
-f = File.open('tmp.txt', 'r')
-
-while line = f.gets
-  print line
-end
 ```
 
 --
@@ -1150,21 +1114,15 @@ File.join('usr', 'mail', 'gumby')
 # => "usr/mail/gumby"
 ```
 
-expand_path
-
-```ruby
-File.expand_path(__FILE__)
-# => "/home/oracle/bin"
-```
-
 ---
 
 # Dir
 
 > Objects of class Dir are directory streams representing directories in the underlying file system.
-They provide a variety of ways to list directories and their contents.
 
-Follow by http://ruby-doc.org/core-2.4.1/Dir.html for more information.
+>They provide a variety of ways to list directories and their contents.
+
+More info [in the docs](http://ruby-doc.org/core-2.4.1/Dir.html).
 
 --
 
@@ -1383,7 +1341,7 @@ res
 
 --
 
-## Short-if expression
+## Ternary operator
 
 ```ruby
 true ? 't' : 'f'
