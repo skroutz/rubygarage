@@ -110,6 +110,7 @@ Fixnum.methods
 # => true
 
 ```
+What class is `Fixnum` an instance of?
 
 ---
 
@@ -155,32 +156,32 @@ Fixnum.methods
 
 ## Arithmetic operators
 
-Assume variable `a` holds `10` and variable `b` holds `20` then:
+```ruby
+a = 10
+b = 20
 
-| Operator | Description                                                                     | Example                             |
-|----------|---------------------------------------------------------------------------------|-------------------------------------|
-| +        | Addition - Adds values on either side of the operator                           | a + b will give 30                  |
-| -        | Subtraction - Subtracts right hand operand from left hand operand               | a - b will give -10                 |
-| \*       | Multiplication - Multiplies values on either side of the operator               | a \* b will give 200                |
-| /        | Division - Divides left hand operand by right hand operand                      | b / a will give 2                   |
-| %        | Modulus - Divides left hand operand by right hand operand and returns remainder | b % a will give 0                   |
-| \*\*     | Exponent - Performs exponential (power) calculation on operators                | a\*\*b will give 10 to the power 20 |
+a + b  # => 30
+a - b  # => -10
+a * b  # => 200
+b / a  # => 2
+a / b  # => 0
+a % b  # => 10
+a ** b # => 100000000000000000000
+
+```
 
 --
 
 ## Assignment Operators
 
-Assume variable `a` holds `10` and variable `b` holds `20` then:
-
-| Operator | Description                                                                                                                  | Example                                      |
-|----------|------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------|
-| =        | Simple assignment operator, Assigns values from right side operands to left side operand                                     | c = a + b will assigne value of a + b into c |
-| +=       | Add AND assignment operator, It adds right operand to the left operand and assign the result to left operand                 | c += a is equivalent to c = c + a            |
-| -=       | Subtract AND assignment operator, It subtracts right operand from the left operand and assign the result to left operand     | c -= a is equivalent to c = c - a            |
-| \*=      | Multiply AND assignment operator, It multiplies right operand with the left operand and assign the result to left operand    | c \*= a is equivalent to c = c \* a          |
-| /=       | Divide AND assignment operator, It divides left operand with the right operand and assign the result to left operand         | c /= a is equivalent to c = c / a            |
-| %=       | Modulus AND assignment operator, It takes modulus using two operands and assign the result to left operand                   | c %= a is equivalent to c = c % a            |
-| \*\*=    | Exponent AND assignment operator, Performs exponential (power) calculation on operators and assign value to the left operand | c \*\*= a is equivalent to c = c \*\* a      |
+| Operator | Description                                  |
+|----------|----------------------------------------------|
+| +=       | c += a is equivalent to c = c + a            |
+| -=       | c -= a is equivalent to c = c - a            |
+| \*=      | c \*= a is equivalent to c = c \* a          |
+| /=       | c /= a is equivalent to c = c / a            |
+| %=       | c %= a is equivalent to c = c % a            |
+| \*\*=    | c \*\*= a is equivalent to c = c \*\* a      |
 
 ---
 
