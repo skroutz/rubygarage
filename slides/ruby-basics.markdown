@@ -148,7 +148,7 @@ What class is `Fixnum` an instance of?
 
 1 / 2.0 # => 0.5
 
-# You can use operators nas methods *
+# You can use operators as methods *
 1.+(1) # => 2
 ```
 
@@ -280,7 +280,7 @@ information
 # => "programming"
 
 'Programming'.chars
-# => #<Enumerator: "Programming":chars>
+# => ["P", "r", "o", "g", "r", "a", "m", "m", "i", "n", "g"]
 
 'Programming'.index('gra')
 # => 3
@@ -1384,37 +1384,31 @@ false || 99
 
 --
 
-At first glance it appears to be synonyms for `&&` and `||` and and or.
-You will then be tempted to use these them in place of `&&` and `||` to improve readability.
-But `and` and `or` don’t behave like their symbolic kin.
+> At first glance, `and` and `or` appear to be synonyms for `&&` and `||`.
+
+> You might be tempted to use them to improve readability.
+
+> But `and`/`or` don’t behave the same as `&&`/`||`
 
 ```ruby
 one = :one
 two = nil
 
-t = one and two
-# => nil
+t = one and two   # => nil
 
-t
-# => :one
+t                 # => :one
 
-t = one && two
-# => nil
+t = one && two    # => nil
 
-t
-# => nil
+t                 # => nil
 
-t = (one and two)
-# => nil
+t = (one and two) # => nil
 
-t
-# => nil
+t                 # => nil
 
-(t = one) && two
-# => nil
+(t = one) && two  # => nil
 
-t
-# => :one
+t                 # => :one
 ```
 
 --
